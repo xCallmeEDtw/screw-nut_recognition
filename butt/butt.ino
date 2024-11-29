@@ -29,14 +29,22 @@ void setup() {
     
 }
 
-
+int nowState = 0; //0 av //1 doing // 3 err
 int shingFlag=0;
 int butState ;
 void loop() {
     // 检查是否有新的客户端连接
+  if(nowState==0){
+    myRGB(0,255,0);
+  }else if(nowState==1){
+    myRGB(255,255,0);
+  }else{
+    myRGB(255,0,0);
+  }
+
     butState = digitalRead(ButtPin);
     // Serial.println(butState);
-    if (butState == LOW && forward == 0 && nowState != -1){
+    if (butState == LOW && forward == 0 && nowState!=-1){
       
       while (butState == LOW){
         butState = digitalRead(ButtPin);
@@ -44,21 +52,14 @@ void loop() {
       }
       forward = 1;
     }
-    if (butState == LOW && && nowState == -1){
+    if (butState == LOW && nowState==-1){
       
       while (butState == LOW){
         butState = digitalRead(ButtPin);
       //  Serial.println(butState);
       }
       nowState = 0;
-    }
-
-    if (nowState==0){
-      myRGB(0,255,0);
-    }else if(nowState==1){
-      myRGB(255,255,0);
-    }else{
-      myRGB(255,0,0);
+      delay(3000);
     }
 
 
@@ -74,19 +75,25 @@ void loop() {
 
         Serial.println("Request: " + request);
 
+        // 处理 /start 路径
         if (request.indexOf("GET /start") >= 0) {
+            // 保存当前的 forward 值供返回
             int currentForward = forward;
+
+            // 将 forward 设置为 0，供下次返回
             forward = 0;
 
+            // 返回当前的 forward 值
             client.println("HTTP/1.1 200 OK");
             client.println("Content-Type: text/plain; charset=utf-8");
             client.println("Connection: close");
             client.println();
             client.println("当前 forward 值为: " + String(currentForward));
 
+            // 调试日志
             Serial.println("Returned forward: " + String(currentForward));
             Serial.println("Forward 已设置为: " + String(forward));
-        } else if (request.indexOf("GET /sendStart") >= 0) {
+        } else if (request.indexOf("GET /sendStart") >= 0){
             nowState = 1; // 设置 nowState
             Serial.println("sendStart 请求触发, nowState 设置为: " + String(nowState));
 
@@ -96,7 +103,7 @@ void loop() {
             client.println("Connection: close");
             client.println();
             client.println("sendStart 请求已处理");
-        } else if (request.indexOf("GET /sendFin") >= 0) {
+        } else if (request.indexOf("GET /sendFinish") >= 0){
             nowState = 0; // 设置 nowState
             Serial.println("sendStart 请求触发, nowState 设置为: " + String(nowState));
 
@@ -106,7 +113,7 @@ void loop() {
             client.println("Connection: close");
             client.println();
             client.println("sendStart 请求已处理");
-        } else if (request.indexOf("GET /sendERR") >= 0) {
+        } else if (request.indexOf("GET /sendERR") >= 0){
             nowState = -1; // 设置 nowState
             Serial.println("sendStart 请求触发, nowState 设置为: " + String(nowState));
 
@@ -115,9 +122,9 @@ void loop() {
             client.println("Content-Type: text/plain; charset=utf-8");
             client.println("Connection: close");
             client.println();
-            client.println("sendStart 请求已处理");
-    
-        } else {
+            client.println("sendStart 请求已处理");        
+        }else {
+            // 未找到路径时返回 404
             client.println("HTTP/1.1 404 Not Found");
             client.println("Content-Type: text/plain; charset=utf-8");
             client.println("Connection: close");
@@ -125,7 +132,7 @@ void loop() {
             client.println("路径未找到");
         }
 
-        client.stop();
+        client.stop(); // 关闭客户端连接
         Serial.println("Client disconnected");
     }
 }
@@ -147,11 +154,11 @@ void shinging(){
     for (int brightness = 255; brightness >= 0; brightness--) {
         myRGB(brightness, 0, 0);  // 使用 myRGB() 將亮度設置為逐漸減少
         delay(10);  // 調整這個延遲以控制變暗速度
-    }	
+    }   
 }
 
 void dealHtml(){
-	WiFiClient client = server.available();
+    WiFiClient client = server.available();
     if (client) {
         // Serial.println("Client connected");
         String request = "";

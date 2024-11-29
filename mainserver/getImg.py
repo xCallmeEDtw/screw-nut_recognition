@@ -17,7 +17,7 @@ def download_image(url, save_path):
 
 if __name__ == "__main__":
     # 網頁圖片 URL
-    image_url = "http://192.168.145.78/capture"
+    image_url = "http://192.168.38.78/capture"
     
     # 保存的檔案路徑
     save_path = "capture_image.jpg"

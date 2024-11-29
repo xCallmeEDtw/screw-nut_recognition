@@ -44,7 +44,7 @@ def start_server():
 
                 itemName = processIMG.proc_img()
                 if itemName == "err":
-                    toThinkSpeak(1)
+                    toThinkSpeak(3)
                     send_err()
                     running = 0
                     continue

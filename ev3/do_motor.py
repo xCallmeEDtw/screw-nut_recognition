@@ -27,7 +27,7 @@ def connect_to_server():
             
             print(":")
             if data == "forward":
-                outer_motor.run_forever(speed_sp=-5*(50))
+                outer_motor.run_forever(speed_sp=-2*(50))
                 sleep(3)
                 outer_motor.stop()
             elif data == "r":
