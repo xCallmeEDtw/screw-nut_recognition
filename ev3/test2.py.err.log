@@ -1,0 +1,16 @@
+Traceback (most recent call last):
+  File "/home/robot/test2.py", line 13, in <module>
+    tank_drive = MoveTank(OUTPUT_A, OUTPUT_B)
+  File "/usr/lib/python3/dist-packages/ev3dev2/motor.py", line 1873, in __init__
+    MotorSet.__init__(self, motor_specs, desc)
+  File "/usr/lib/python3/dist-packages/ev3dev2/motor.py", line 1655, in __init__
+    self.motors[motor_port] = motor_class(motor_port)
+  File "/usr/lib/python3/dist-packages/ev3dev2/motor.py", line 1118, in __init__
+    **kwargs)
+  File "/usr/lib/python3/dist-packages/ev3dev2/motor.py", line 395, in __init__
+    super(Motor, self).__init__(self.SYSTEM_CLASS_NAME, name_pattern, name_exact, **kwargs)
+  File "/usr/lib/python3/dist-packages/ev3dev2/__init__.py", line 223, in __init__
+    chain_exception(DeviceNotFound("%s is not connected." % self), None)
+  File "/usr/lib/python3/dist-packages/ev3dev2/__init__.py", line 54, in chain_exception
+    raise exception from cause
+ev3dev2.DeviceNotFound: LargeMotor(ev3-ports:outA) is not connected.
