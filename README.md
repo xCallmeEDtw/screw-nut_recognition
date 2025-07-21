@@ -46,16 +46,20 @@ LED燈元件、按鈕元件、ESP32-S3-WROOM CAM、ESP32、EV3與履帶組。
 ![i1](https://hackmd.io/_uploads/rJVL-pjUxe.png)     
 影像處理流程之內容簡述：
 1.	將Original Image變成Thresh Image。 
-	![image](https://hackmd.io/_uploads/rJaYWajLge.png)
+	
+ ![image](https://hackmd.io/_uploads/rJaYWajLge.png)
 
 2.	將Thresh Image進行Dilate and Enrode。 
-	![image](https://hackmd.io/_uploads/Hy1s-psIll.png)
+
+ ![image](https://hackmd.io/_uploads/Hy1s-psIll.png)
 
 3.	利用處理出的圖片，找出Center Part。
-	![image](https://hackmd.io/_uploads/B1th-TjLxg.png)
+
+ ![image](https://hackmd.io/_uploads/B1th-TjLxg.png)
         
 4.	利用Center Part找出Contour。
-	![image](https://hackmd.io/_uploads/rJjGzTjIgl.png)
+
+ ![image](https://hackmd.io/_uploads/rJjGzTjIgl.png)
          
 ## 影像辨識方式
 1.	透過處理出的Contour，判斷其roundness (圓度) 以分辨螺絲螺。
